@@ -6,6 +6,8 @@
 
 define('CODE_LENGTH', 6);
 define('DATA_FILE', '/tmp/shorturl_data.json');
+define('KV_URL',   'https://devoted-titmouse-144271.upstash.io');
+define('KV_TOKEN', 'gQAAAAAAAjOPAAIgcDE5YWY3ODdhMzRiZDY0NDFmYjIwYjI2Nzk0MmE4NzRhOA');
 
 // ─── Base URL ────────────────────────────────────────────────────────────────
 function getBaseUrl(): string {
@@ -13,15 +15,15 @@ function getBaseUrl(): string {
     return rtrim($proto . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost'), '/');
 }
 
-// ─── Deteksi storage ─────────────────────────────────────────────────────────
+// ─── Selalu pakai KV ─────────────────────────────────────────────────────────
 function useKv(): bool {
-    return !empty(getenv('KV_REST_API_URL')) && !empty(getenv('KV_REST_API_TOKEN'));
+    return true;
 }
 
 // ─── Vercel KV helpers ───────────────────────────────────────────────────────
 function kvRequest(string $method, string $path, mixed $body = null): mixed {
-    $url   = rtrim(getenv('KV_REST_API_URL'), '/') . $path;
-    $token = getenv('KV_REST_API_TOKEN');
+    $url   = rtrim(KV_URL, '/') . $path;
+    $token = KV_TOKEN;
     $ch    = curl_init($url);
     $opts  = [
         CURLOPT_RETURNTRANSFER => true,
