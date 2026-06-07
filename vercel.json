@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "*.php", "use": "vercel-php" }
+  ],
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/index.php"
+    },
+    {
+      "src": "/redirect\\.php",
+      "dest": "/redirect.php"
+    },
+    {
+      "src": "/shorturl_lib\\.php",
+      "dest": "/index.php"
+    },
+    {
+      "src": "/([a-zA-Z0-9_-]+)",
+      "dest": "/redirect.php?code=$1"
+    }
+  ],
+  "env": {
+    "PHP_INI_SCAN_DIR": "/var/task"
+  }
+}
