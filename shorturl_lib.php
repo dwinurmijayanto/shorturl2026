@@ -34,7 +34,6 @@ function kvRequest(string $method, string $path, mixed $body = null): mixed {
     if ($body !== null) $opts[CURLOPT_POSTFIELDS] = json_encode($body);
     curl_setopt_array($ch, $opts);
     $resp = curl_exec($ch);
-    curl_close($ch);
     return json_decode($resp, true);
 }
 
